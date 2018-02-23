@@ -57,7 +57,7 @@ to view the packages available to you:
     sudo apt-cache search mosquitto
 
 to install broker and clients:
-	
+  
     sudo apt-get install mosquitto mosquitto-clients
 
     sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
@@ -87,42 +87,60 @@ to kill background mosquitto :
 ## 8) Setting up a WiFi AP
 
 Tutorial:
-https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf
 
+[Adafruit Wifi AP Setup](https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf)
 
+```
 sudo apt-get install hostapd isc-dhcp-server
 sudo apt-get install iptables-persistent
+```
 
 setup dhcp:
+
+```
 sudo nano /etc/dhcp/dhcpd.conf
+```
 
 comment out the 2 lines with the option domain name and domain name server.
-uncomment "authoritative"
+
+>uncomment "authoritative"
 
 add the subnet configuration at the bottom.
+
+
+```
 subnet 192.168.10.0 netmask 255.255.255.0 {
-range 192.168.10.10 192.168.10.50;
-option broadcast-address 192.168.10.255;
-option routers 192.168.10.1;
-default-lease-time 600;
-max-lease-time 7200;
-}
+   range 192.168.10.10 192.168.10.50;
+   option broadcast-address 192.168.10.255;
+   option routers 192.168.10.1;
+   default-lease-time 600;
+   max-lease-time 7200;
+   optoin domain-name "local";
+option domain-name-servers 8.8.8.8,8.8.4.4;
+   }```
 
-
-
+```
 sudo nano /etc/default/isc-dhcp-server
+```
+
 and scroll down to 
-INTERFACES="" 
+
+>INTERFACES="" 
+
 and update it to say 
-INTERFACES="wlan0"
+
+>INTERFACES="wlan0"
 
 make sure the interface is down:
 
+```
 sudo ifdown wlan0
+```
 
 create a file in /etc/hostapd 
 call it hostapd.conf:
 
+```
 interface=wlan0
 driver=nl80211
 ssid=PI_AP
@@ -140,16 +158,21 @@ wpa_pairwise=CCMP
 wpa_group_rekey=86400
 ieee80211n=1
 wme_enabled=1
+```
 
 
-at the bottom of the network interfaces file: ( in /etc/network/interfaces)
-auto eth0
-iface eth0 inet dhcp
 
-allow-hotplug wlan0
-iface wlan0 inet static
-     address 192.168.10.1
-     netmask 255.255.255.0
+at the bottom of the network interfaces file: 
+( in /etc/network/interfaces)
+
+
+>auto eth0
+>iface eth0 inet dhcp
+>
+>allow-hotplug wlan0
+>iface wlan0 inet static
+>     address 192.168.10.1
+>     netmask 255.255.255.0
 
 in /etc/defaults/hostapd
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
