@@ -115,11 +115,10 @@ subnet 192.168.10.0 netmask 255.255.255.0 {
    option routers 192.168.10.1;
    default-lease-time 600;
    max-lease-time 7200;
-   optoin domain-name "local";
-option domain-name-servers 8.8.8.8,8.8.4.4;
-   }```
+   option domain-name "local";
+   option domain-name-servers 8.8.8.8,8.8.4.4;
+   }
 
-```
 sudo nano /etc/default/isc-dhcp-server
 ```
 
@@ -161,7 +160,6 @@ wme_enabled=1
 ```
 
 
-
 at the bottom of the network interfaces file: 
 ( in /etc/network/interfaces)
 
@@ -175,14 +173,42 @@ at the bottom of the network interfaces file:
 >     netmask 255.255.255.0
 
 in /etc/defaults/hostapd
-DAEMON_CONF="/etc/hostapd/hostapd.conf"
+
+>DAEMON_CONF="/etc/hostapd/hostapd.conf"
 
 
 in /etc/init.d/hostapd
-DAEMON_CONF=/etc/hostapd/hostapd.conf
 
+>DAEMON_CONF=/etc/hostapd/hostapd.conf
+
+
+### Configure NAT
+Run 
+
+``` 
+sudo nano /etc/sysctl.conf
+```
+
+
+Scroll to the bottom and add
+
+>net.ipv4.ip_forward=1
+
+
+```
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+```
 
 reboot and try it out ( the tutorial on adafruit is thorough and it is easy to mess something up.)
+
+---
+
 
 ## 9) Useful blog on using Paho mosquitto.
 
