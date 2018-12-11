@@ -34,11 +34,10 @@ Setting up the PI:
 
 ## 2) Install MQTT Client Python libraries:
 
----
+```
 git clone https://github.com/eclipse/paho.mqtt.python
 cd paho.mqtt.python
-sudo python setup.py install
----
+sudo python setup.py install```
 
 Useful links:
 
