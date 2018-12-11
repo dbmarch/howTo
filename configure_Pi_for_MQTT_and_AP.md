@@ -226,11 +226,13 @@ ___
 https://wiki.filezilla-project.org/Client_Installation
 
 
-## 11) Install python tools if you don't have pip
+## Install python tools if you don't have pip
 ----
     sudo apt-get install python-pip python-dev 
 
-## 12) Markdown
+## Markdown
 
 [viewer](http://markdownlivepreview.com/)
 [cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+This cheatsheet is a great resource.
