@@ -2,20 +2,23 @@
 
 Instructions to setup the Raspberry PI to host a MQTT broker and setup a wireless AP with DHCP server and NAT.  NAT is only needed if you want to be able to plug your Raspberry PI into a LAN and route traffic between the 2 networks.
 
-Load Raspian
- Update it:
+## Load Raspian
+
+ ### Update it:
+ ```
     sudo apt-get update
     sudo apt-get upgrade
     sudo apt-get install build-essential 
+```
+### Configure raspi-config to enable the I2C, camera, ssh, etc
+    `sudo raspi-config`
 
-Configure raspi-config to enable the I2C, camera, ssh, etc
-    sudo raspi-config
-
-check your interfaces:
+### check your interfaces:
+```
   ifconfig
 
   lsusb
-
+```
 
 
 ## 1) Install Dexter Libraries: (IF YOU ARE USING A GROVE PI SHIELD)
@@ -26,18 +29,19 @@ With these libraries and the shield, it is very simple to access all types of se
 Install Grove PI Libraries from Dexter: (PYTHON)
 
 Setting up the PI:
-
+```
     sudo curl -kL dexterindustries.com/update_grovepi | bash
 
     sudo reboot
-
+```
 
 ## 2) Install MQTT Client Python libraries:
 
 ```
 git clone https://github.com/eclipse/paho.mqtt.python
 cd paho.mqtt.python
-sudo python setup.py install```
+sudo python setup.py install
+```
 
 Useful links:
 
@@ -45,23 +49,24 @@ a) https://pypi.python.org/pypi/paho-mqtt
 
 b) https://www.eclipse.org/paho/downloads.php
 
-## Now add some python libraries
+### Now add some python libraries
+```
     sudo pip install netifaces
 
     sudo apt-get install python-mosquitto
-
+```
 
 ## 3) MOSQUITTO BROKER & CLIENTS
 
 to view the packages available to you:
-    sudo apt-cache search mosquitto
+    `sudo apt-cache search mosquitto`
 
 to install broker and clients:
-  
+```
     sudo apt-get install mosquitto mosquitto-clients
 
     sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
-
+```
 
 ## 7) Install Mosquitto Broker
 
@@ -72,21 +77,21 @@ To startup the mosquitto server:
 
 In foreground in separate window:
 
-    sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
+    `sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf`
 
 As daemon:
 
-    sudo mosquitto -v -d -c /etc/mosquitto/mosquitto.conf
+    `sudo mosquitto -v -d -c /etc/mosquitto/mosquitto.conf`
 
 to kill background mosquitto :
 
 
-    sudo kill $(ps aux |awk '/mosquitto/ {print $2}')
+    `sudo kill $(ps aux |awk '/mosquitto/ {print $2}')`
 
 
 ## 8) Setting up a WiFi AP
 
-Tutorial:
+Here is a good tutorial:
 
 [Adafruit Wifi AP Setup](https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf)
 
@@ -163,7 +168,7 @@ wme_enabled=1
 at the bottom of the network interfaces file: 
 ( in /etc/network/interfaces)
 
-
+```
 >auto eth0
 >iface eth0 inet dhcp
 >
@@ -171,18 +176,19 @@ at the bottom of the network interfaces file:
 >iface wlan0 inet static
 >     address 192.168.10.1
 >     netmask 255.255.255.0
-
+```
 in /etc/defaults/hostapd
 
->DAEMON_CONF="/etc/hostapd/hostapd.conf"
+`>DAEMON_CONF="/etc/hostapd/hostapd.conf"`
 
 
 in /etc/init.d/hostapd
 
->DAEMON_CONF=/etc/hostapd/hostapd.conf
+`>DAEMON_CONF=/etc/hostapd/hostapd.conf`
 
 
 ### Configure NAT
+
 Run 
 
 ``` 
@@ -192,7 +198,7 @@ sudo nano /etc/sysctl.conf
 
 Scroll to the bottom and add
 
->net.ipv4.ip_forward=1
+`>net.ipv4.ip_forward=1`
 
 
 ```
@@ -209,12 +215,14 @@ reboot and try it out ( the tutorial on adafruit is thorough and it is easy to m
 
 ---
 
+___
 
-## 9) Useful blog on using Paho mosquitto.
+# Additional Information which might be useful
+## Blog on using Paho mosquitto.
 
 [Paho Blog](http://www.steves-internet-guide.com/client-objects-python-mqtt/)
 
-## 10) Download FileZilla to upload files to PI:
+## Download FileZilla to upload files to PI:
 https://wiki.filezilla-project.org/Client_Installation
 
 
