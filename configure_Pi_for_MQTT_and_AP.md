@@ -1,7 +1,6 @@
 # Setting up the PI:
 
-Instructions to setup the PI to run the MQTT client in python talking to the Mosquitto broker.
-You can control the train by publishing MQTT commands.  
+Instructions to setup the Raspberry PI to host a MQTT broker and setup a wireless AP with DHCP server and NAT.  NAT is only needed if you want to be able to plug your Raspberry PI into a LAN and route traffic between the 2 networks.
 
 Load Raspian
  Update it:
@@ -21,6 +20,8 @@ check your interfaces:
 
 ## 1) Install Dexter Libraries: (IF YOU ARE USING A GROVE PI SHIELD)
 
+These are only necessary if the applications you are using are based upon the Dexter Industries sensors.
+With these libraries and the shield, it is very simple to access all types of sensors using Python.
 
 Install Grove PI Libraries from Dexter: (PYTHON)
 
