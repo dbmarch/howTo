@@ -177,7 +177,7 @@ at the bottom of the network interfaces file:
 >     address 192.168.10.1
 >     netmask 255.255.255.0
 ```
-in /etc/defaults/hostapd
+in /etc/default/hostapd
 
 `>DAEMON_CONF="/etc/hostapd/hostapd.conf"`
 
