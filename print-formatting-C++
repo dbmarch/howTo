@@ -1,0 +1,46 @@
+To print out hex numbers:
+   std::cout << std::uppercase
+         <<std::hex 
+         << std::showbase // show the 0x prefix
+         << std::internal // fill between the prefix and the number
+         << std::setfill('0'); // fill with 0s
+
+   std::cout << 0x23 << " " << 0xFF <<  std::endl;
+
+
+
+
+
+save & restore the flags:
+
+ ios_base::fmtflags oldFlags = cout.flags();
+    streamsize         oldPrec  = cout.precision();
+    char               oldFill  = cout.fill();
+
+    // Do lots of output
+
+    cout.flags(oldFlags);
+    cout.precision(oldPrec);
+    cout.fill(oldFill);
+    
+    
+    
+ #include <iostream>
+#include <iomanip>
+
+int main()
+{
+    using namespace std;
+
+    int x =   2;
+    int y = 255;
+
+    cout << showbase // show the 0x prefix
+         << internal // fill between the prefix and the number
+         << setfill('0'); // fill with 0s
+
+    cout << hex << setw(4) << x << dec << " = " << setw(3) << x << endl;
+    cout << hex << setw(4) << y << dec << " = " << setw(3) << y << endl;
+
+    return 0;
+}
